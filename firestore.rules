@@ -1,0 +1,134 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+  function readClientData(clientId){
+    return  request.auth != null &&  "role" in request.auth.token &&
+    request.auth.token.role != undefined
+      && (request.auth.token.role[clientId] == 'Manager'|| 
+      request.auth.token.role[clientId] == 'Owner' || 
+      request.auth.token.role[clientId] =='Viewer')
+      && clientId in request.auth.token.clientId   ;
+  } 
+
+  function writeClientData(clientId){
+    return  request.auth != null && "role" in request.auth.token 
+      && (request.auth.token.role[clientId] == 'Manager'||
+      request.auth.token.role[clientId] == 'Owner' )
+      &&  clientId in request.auth.token.clientId  ;
+  }
+  function consoleUser(){
+      return (request.auth != null && "role" in request.auth.token  && request.auth.token.consoleUser)
+  } 
+   match /Clients/{clientId}/Playbacks/{document=**}{
+     // allow read: if  consoleUser() ||readClientData(clientId) || request.resource.data.CustomerUID == resource.data.Custom
+     allow read: if true
+     allow list: if  consoleUser() ||readClientData(clientId)
+     allow write:  if false
+     allow update: if false
+     allow delete: if false
+   }
+    match /Clients/{clientId}/SubscriptionPlaybacks/{document=**}{
+     // allow read: if  consoleUser() ||readClientData(clientId) || request.resource.data.CustomerUID == resource.data.Custom
+     allow read: if true
+     allow list: if  consoleUser() ||readClientData(clientId)
+     allow write:  if false
+     allow update: if false
+     allow delete: if false
+   }
+   match /Uploads/{document=**}{
+      allow read
+      allow write
+      allow delete: if false;
+    }
+    match /OnviLeads/{document=**}{
+      allow read
+      allow write
+      allow delete;
+    }
+    match /ClientSignUp/{document=**}{
+      allow read
+      allow write
+      allow delete;
+    }
+  match /Clients/{clientId}/Customers/{document=**}{
+      allow read: if request.auth.uid==resource.data.Uid
+      allow write: if request.auth.uid==resource.data.Uid
+      allow delete: if false;
+    }
+     match /Clients/{clientId}/CustomerSubscriptionPlans/{document=**}{
+      allow read: if resource.data.Active
+      allow list: if resource.data.Active
+      allow write: if writeClientData(clientId) || consoleUser() 
+      allow update: if writeClientData(clientId) || consoleUser() 
+      allow delete: if false;
+    }
+      match /Clients/{clientId}/CustomerSubscriptions/{document=**}{
+      allow read: if resource.data.Active && resource.data.CustomerId == resource.data.Uid
+      allow list: if resource.data.Active && resource.data.CustomerId == resource.data.Uid
+      allow write: if writeClientData(clientId) || consoleUser() 
+      allow update: if writeClientData(clientId) || consoleUser() 
+      allow delete: if false;
+    }
+    match /Clients/{clientId}/Assets/{document=**}{
+      allow read:if readClientData(clientId)||consoleUser()|| (resource.data.Live )
+      allow list:if readClientData(clientId)||consoleUser()|| (resource.data.Live)
+      allow update: if writeClientData(clientId)|| consoleUser();
+      allow write: if writeClientData(clientId)|| consoleUser();
+      allow delete: if false;
+    }
+    match /PlanDetails/{planId}/{document=**}{
+    allow read: if resource.data.Active;
+    allow delete: if false;
+    allow list: if resource.data.Active;
+    allow update: if false
+    
+    }
+    match /Clients/{clientId}/PlanDetails/{document=**}{
+      allow read:if readClientData(clientId)||consoleUser()
+      allow list:if readClientData(clientId)||consoleUser()
+      allow update: if false
+      allow write: if false
+      allow delete: if false;
+    }
+     match /Clients/{clientId}/Assets/{assetId}/Videos/{document=**}{
+      allow read:if readClientData(clientId)||consoleUser()|| get(/databases/$(database)/documents/Clients/$(clientId)/Assets/$(assetId)).data.Live
+      allow list:if readClientData(clientId)||consoleUser()|| get(/databases/$(database)/documents/Clients/$(clientId)/Assets/$(assetId)).data.Live
+      allow update: if writeClientData(clientId)|| consoleUser();
+      allow write: if writeClientData(clientId)|| consoleUser();
+      allow delete: if false;
+    }
+     match /Clients/{clientId}/Assets/{assetId}/Seasons/{document=**}{
+      allow read:if readClientData(clientId)||consoleUser()|| get(/databases/$(database)/documents/Clients/$(clientId)/Assets/$(assetId)).data.Live
+      allow list:if readClientData(clientId)||consoleUser()|| get(/databases/$(database)/documents/Clients/$(clientId)/Assets/$(assetId)).data.Live
+      allow update: if writeClientData(clientId)|| consoleUser();
+      allow write: if writeClientData(clientId)|| consoleUser();
+      allow delete: if false;
+    }
+    match /Clients/{clientId}/{document=**} {
+      allow read: if request.auth != null
+      allow list: if consoleUser()
+      allow update: if writeClientData(clientId)|| consoleUser();
+      allow write: if writeClientData(clientId)|| consoleUser();
+      allow delete: if false;
+    }
+    match /Clients/{clientId}/ThirdPartyAds/{document=**} {
+      allow read: if true
+      allow list: if true
+      allow update: if writeClientData(clientId)|| consoleUser();
+      allow write: if writeClientData(clientId)|| consoleUser();
+      allow delete: if false;
+    }
+    match /TeamInvites/{inviteId}/{document=**}{  
+      allow write: if  (request.auth != null && 
+      (request.auth.token.role[request.resource.data.ClientId]=='Owner'||request.auth.token.role[request.resource.data.ClientId]=='Manager')
+      && request.resource.data.ClientId in request.auth.token.clientId)||consoleUser();
+      allow read: if (request.auth != null && 
+      (request.auth.token.role[resource.data.ClientId]=='Owner'||request.auth.token.role[resource.data.ClientId]=='Manager')
+      && resource.data.ClientId in request.auth.token.clientId)||consoleUser();
+      allow delete: if (request.auth != null && 
+      (request.auth.token.role[resource.data.ClientId]=='Owner'||request.auth.token.role[resource.data.ClientId]=='Manager')
+      && resource.data.ClientId in request.auth.token.clientId)||consoleUser();
+    }
+    
+  }
+}

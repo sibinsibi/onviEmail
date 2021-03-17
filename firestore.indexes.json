@@ -1,0 +1,310 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "Assets",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "Live",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Index",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "CustomerSubscriptionPlans",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "Active",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Index",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "CustomerSubscriptionPlans",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "Active",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Index",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "PlanDetails",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "Active",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Index",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Playbacks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "Active",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "AssetId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "CustomerId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "PaymentStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Expiry",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Playbacks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "Active",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "AssetId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "CustomerId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "PaymentStatus",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "VideoId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Expiry",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Playbacks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "Active",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "AssetId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "CustomerId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "PurchaseType",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Expiry",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Playbacks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "Active",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "AssetId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "CustomerId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "PurchaseType",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "SeasonId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Expiry",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "ThirdPartyAds",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "Regions",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "Active",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "AdType",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "AssetId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Expiry",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "ThirdPartyAds",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "Regions",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "Active",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "AdType",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Expiry",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Videos",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "Active",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Deleted",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Encoding",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Index",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": [
+    {
+      "collectionGroup": "Playbacks",
+      "fieldPath": "PayPalOrderId",
+      "indexes": [
+        {
+          "order": "ASCENDING",
+          "queryScope": "COLLECTION"
+        },
+        {
+          "order": "DESCENDING",
+          "queryScope": "COLLECTION"
+        },
+        {
+          "arrayConfig": "CONTAINS",
+          "queryScope": "COLLECTION"
+        },
+        {
+          "order": "ASCENDING",
+          "queryScope": "COLLECTION_GROUP"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Playbacks",
+      "fieldPath": "RazorPayOrderId",
+      "indexes": [
+        {
+          "order": "ASCENDING",
+          "queryScope": "COLLECTION"
+        },
+        {
+          "order": "DESCENDING",
+          "queryScope": "COLLECTION"
+        },
+        {
+          "arrayConfig": "CONTAINS",
+          "queryScope": "COLLECTION"
+        },
+        {
+          "order": "ASCENDING",
+          "queryScope": "COLLECTION_GROUP"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Videos",
+      "fieldPath": "FileName",
+      "indexes": [
+        {
+          "order": "ASCENDING",
+          "queryScope": "COLLECTION"
+        },
+        {
+          "order": "DESCENDING",
+          "queryScope": "COLLECTION"
+        },
+        {
+          "arrayConfig": "CONTAINS",
+          "queryScope": "COLLECTION"
+        },
+        {
+          "order": "ASCENDING",
+          "queryScope": "COLLECTION_GROUP"
+        }
+      ]
+    }
+  ]
+}
